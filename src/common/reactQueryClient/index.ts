@@ -3,8 +3,7 @@ import { MutationCache, QueryCache, QueryClient, QueryClientConfig } from '@tans
 const queryClientConfig: QueryClientConfig = {
   defaultOptions: {
     queries: {
-      // refetchOnWindowFocus: true,
-      refetchOnWindowFocus: false, // TODO: remove (rate limit)
+      refetchOnWindowFocus: false,
       retry: 0,
     },
   },
