@@ -1,13 +1,13 @@
 import { Box, Typography, CircularProgress, LinearProgress, Divider } from '@mui/material';
 
-import { GitHubAvailableLanguages, Repository } from '../useGetRepositories/service';
+import { GitHubAvailableLanguages, Repositories } from '../useGetRepositories/service';
 
 import { RepositoriesFilter } from './RepositoriesFilter';
 import { RepositoryItem } from './RepositoryItem';
 import { updateFavourites } from './updateFavourites';
 
 export type HomeViewProps = {
-  repositories: ReadonlyArray<Repository> | undefined;
+  repositories: Repositories | undefined;
   isFetching: boolean;
   areFavouritesFiltered: boolean;
   languageFilter: GitHubAvailableLanguages;
@@ -65,7 +65,7 @@ export const HomeView = ({
                 url={repository.html_url}
                 numOfStars={repository.stargazers_count}
                 language={repository.language}
-                isBookmarked={favouriteRepositoryIds.some(
+                isFavourited={favouriteRepositoryIds.some(
                   (favouriteRepositoryId) => favouriteRepositoryId === repository.id,
                 )}
                 onChangeBookmark={() => handleChangeBookmark(repository.id)}

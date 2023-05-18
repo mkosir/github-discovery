@@ -7,7 +7,7 @@ export type RepositoryItemProps = {
   url: string;
   numOfStars: number;
   language: string;
-  isBookmarked: boolean;
+  isFavourited: boolean;
   onChangeBookmark: () => void;
 };
 
@@ -17,11 +17,11 @@ export const RepositoryItem = ({
   url,
   numOfStars,
   language,
-  isBookmarked,
+  isFavourited,
   onChangeBookmark,
 }: RepositoryItemProps) => {
   return (
-    <Box sx={{ border: '1px solid lightgray', borderRadius: '8px', p: 1 }}>
+    <Box role="listitem" sx={{ border: '1px solid lightgray', borderRadius: '8px', p: 1 }}>
       <Box sx={{ display: 'flex' }}>
         <Box
           sx={{
@@ -34,7 +34,11 @@ export const RepositoryItem = ({
           }}
           onClick={onChangeBookmark}
         >
-          {isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+          {isFavourited ? (
+            <BookmarkIcon data-testid="favourited-icon" />
+          ) : (
+            <BookmarkBorderIcon data-testid="not-favourited-icon" />
+          )}
         </Box>
         <a href={url} target="_blank" rel="noopener noreferrer">
           <Typography variant="h6">{name}</Typography>

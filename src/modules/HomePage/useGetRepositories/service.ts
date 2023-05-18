@@ -19,7 +19,7 @@ export type GetRepositoriesResponse = {
   items: ReadonlyArray<Repository>;
 };
 
-export type Repository = {
+type Repository = {
   id: number;
   name: string;
   description: string;
@@ -27,6 +27,7 @@ export type Repository = {
   language: string;
   html_url: string;
 };
+export type Repositories = ReadonlyArray<Repository>;
 
 export const getRepositories = async (params: GetRepositoriesParams) => {
   const { createdFrom, language, ...serializableParams } = params;
