@@ -1,4 +1,4 @@
-import { updateFavourites, UpdateFavouritesReturn } from './';
+import { updateFavourites, UpdateFavouritesReturn } from '.';
 
 describe('modules', () => {
   describe('HomePage', () => {

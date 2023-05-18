@@ -1,6 +1,6 @@
 import { Box, Checkbox, Typography, Select, MenuItem } from '@mui/material';
 
-import { GITHUB_AVAILABLE_LANGUAGES, GitHubAvailableLanguages } from './useGetRepositories/service';
+import { GITHUB_AVAILABLE_LANGUAGES, GitHubAvailableLanguages } from '../useGetRepositories/service';
 
 export type RepositoriesFilterProps = {
   areFavouritesFiltered: boolean;

@@ -19,7 +19,7 @@ export type GetRepositoriesResponse = {
   items: ReadonlyArray<Repository>;
 };
 
-type Repository = {
+export type Repository = {
   id: number;
   name: string;
   description: string;
