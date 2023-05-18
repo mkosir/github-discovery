@@ -4,6 +4,7 @@ import { BooleanParam, NumericArrayParam, useQueryParam, withDefault } from 'use
 
 import { RepositoriesFilter } from './RepositoriesFilter';
 import { RepositoryItem } from './RepositoryItem';
+import { updateFavourites } from './updateFavourites';
 import { useGetRepositories } from './useGetRepositories';
 import { GitHubAvailableLanguages } from './useGetRepositories/service';
 
@@ -27,17 +28,11 @@ export const HomePage = () => {
   });
 
   const handleChangeBookmark = (repositoryId: number) => {
-    const repositoryIdIndex = (favouriteRepositoryIds as Array<number>).indexOf(repositoryId);
-
-    if (repositoryIdIndex !== -1) {
-      const favouriteRepositoryIdsFiltered = favouriteRepositoryIds.filter(
-        (favouriteRepositoryId) => favouriteRepositoryId !== repositoryId,
-      );
-      setFavouriteRepositoryIds(favouriteRepositoryIdsFiltered);
-      return;
-    }
-
-    setFavouriteRepositoryIds([...favouriteRepositoryIds, repositoryId]);
+    const favouritesUpdated = updateFavourites({
+      favouriteRepositoryIds: favouriteRepositoryIds as Array<number>,
+      repositoryId,
+    });
+    setFavouriteRepositoryIds(favouritesUpdated);
   };
 
   const repositories = areFavouritesFiltered
