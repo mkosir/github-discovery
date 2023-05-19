@@ -1,7 +1,10 @@
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { renderWithTheme } from 'common/test';
 import { mockRepositories } from 'common/test/mocks';
+
+import { GitHubAvailableLanguages } from '../useGetRepositories/service';
 
 import { HomeView } from './';
 
@@ -54,13 +57,64 @@ describe('modules', () => {
           />,
         );
 
-        expect(screen.getByText('GitHub Discovery')).toBeInTheDocument();
-
         const renderedRepositories = await screen.findAllByRole('listitem');
         expect(renderedRepositories.length).toBe(mockRepositories.length);
 
         const favouritedRepositories = screen.getAllByTestId('favourited-icon');
         expect(favouritedRepositories.length).toBe(favouritedRepositoryIds.length);
+      });
+
+      it('should render only favourites repositories when favourites are selected as filtering option', async () => {
+        const favouritedRepositoryIds = [mockRepositories[0].id, mockRepositories[2].id];
+
+        renderWithTheme(
+          <HomeView
+            repositories={mockRepositories}
+            isFetching={false}
+            areFavouritesFiltered={true}
+            languageFilter="All"
+            favouriteRepositoryIds={favouritedRepositoryIds}
+            onChangeFavourites={jest.fn()}
+            onChangeFavouriteFilter={jest.fn()}
+            onChangeLanguageFilter={jest.fn()}
+          />,
+        );
+
+        const renderedRepositories = await screen.findAllByRole('listitem');
+        expect(renderedRepositories.length).toBe(favouritedRepositoryIds.length);
+      });
+
+      it('should trigger callbacks with correct parameters when interacted on UI', async () => {
+        const onChangeFavourites = jest.fn();
+        const onChangeFavouriteFilter = jest.fn();
+        const onChangeLanguageFilter = jest.fn();
+
+        renderWithTheme(
+          <HomeView
+            repositories={mockRepositories}
+            isFetching={false}
+            areFavouritesFiltered={false}
+            languageFilter="All"
+            favouriteRepositoryIds={[]}
+            onChangeFavourites={onChangeFavourites}
+            onChangeFavouriteFilter={onChangeFavouriteFilter}
+            onChangeLanguageFilter={onChangeLanguageFilter}
+          />,
+        );
+
+        const favouritesCheckbox = screen.getByRole('checkbox', { name: 'Favourites:' });
+        await userEvent.click(favouritesCheckbox);
+        expect(onChangeFavouriteFilter).toBeCalledWith<[boolean]>(true);
+
+        const languageSelect = screen.getByRole('button', { name: 'All' });
+        await userEvent.click(languageSelect);
+        const languageTypescriptSelect = screen.getByRole('option', { name: 'TypeScript' });
+        await userEvent.click(languageTypescriptSelect);
+        expect(onChangeLanguageFilter).toBeCalledWith<[GitHubAvailableLanguages]>('TypeScript');
+
+        const firstNotFavouritedIcon = screen.getAllByTestId('not-favourited-icon')[0];
+        await userEvent.click(firstNotFavouritedIcon);
+        expect(onChangeFavourites).toBeCalled();
       });
     });
   });

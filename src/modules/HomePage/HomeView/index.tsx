@@ -27,7 +27,7 @@ export const HomeView = ({
   onChangeFavouriteFilter,
   onChangeLanguageFilter,
 }: HomeViewProps) => {
-  const handleChangeBookmark = (repositoryId: number) => {
+  const handleChangeFavourite = (repositoryId: number) => {
     const favouritesUpdated = updateFavourites({
       favouriteRepositoryIds: favouriteRepositoryIds as Array<number>,
       repositoryId,
@@ -68,7 +68,7 @@ export const HomeView = ({
                 isFavourited={favouriteRepositoryIds.some(
                   (favouriteRepositoryId) => favouriteRepositoryId === repository.id,
                 )}
-                onChangeBookmark={() => handleChangeBookmark(repository.id)}
+                onChangeFavourite={() => handleChangeFavourite(repository.id)}
               />
             </Box>
           ))

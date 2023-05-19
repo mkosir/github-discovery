@@ -1,4 +1,4 @@
-import { Box, Checkbox, Typography, Select, MenuItem } from '@mui/material';
+import { Box, Checkbox, Typography, Select, MenuItem, FormControlLabel } from '@mui/material';
 
 import { GITHUB_AVAILABLE_LANGUAGES, GitHubAvailableLanguages } from '../useGetRepositories/service';
 
@@ -18,8 +18,13 @@ export const RepositoriesFilter = ({
   return (
     <Box sx={{ display: 'flex' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-        <Typography variant="body2">Favourites:</Typography>
-        <Checkbox checked={areFavouritesFiltered} onChange={(event) => onChangeFavourites(event.target.checked)} />
+        <FormControlLabel
+          control={
+            <Checkbox checked={areFavouritesFiltered} onChange={(event) => onChangeFavourites(event.target.checked)} />
+          }
+          label="Favourites:"
+          labelPlacement="start"
+        />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="body2">Language:</Typography>

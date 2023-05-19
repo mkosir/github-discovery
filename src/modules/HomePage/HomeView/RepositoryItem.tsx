@@ -8,7 +8,7 @@ export type RepositoryItemProps = {
   numOfStars: number;
   language: string;
   isFavourited: boolean;
-  onChangeBookmark: () => void;
+  onChangeFavourite: () => void;
 };
 
 export const RepositoryItem = ({
@@ -18,7 +18,7 @@ export const RepositoryItem = ({
   numOfStars,
   language,
   isFavourited,
-  onChangeBookmark,
+  onChangeFavourite,
 }: RepositoryItemProps) => {
   return (
     <Box role="listitem" sx={{ border: '1px solid lightgray', borderRadius: '8px', p: 1 }}>
@@ -32,7 +32,7 @@ export const RepositoryItem = ({
               cursor: 'pointer',
             },
           }}
-          onClick={onChangeBookmark}
+          onClick={onChangeFavourite}
         >
           {isFavourited ? (
             <BookmarkIcon data-testid="favourited-icon" />
